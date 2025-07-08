@@ -24,7 +24,7 @@ const SpeedleModal = ({ onClickStart }: any) => {
         Rules
         <Box>
           {RULES.map((rule, index) => (
-            <Row>
+            <Row key={index}>
               {index + 1}. <img src={rule.image} height={15} />
               {rule.rule}
             </Row>

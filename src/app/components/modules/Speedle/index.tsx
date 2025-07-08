@@ -189,6 +189,7 @@ const SpeedlePage = () => {
                       isActive={isSolved ? false : i === currentRow}
                       onHandleColumn={() => onHandleColumn()}
                       setIsSolved={setIsSolved}
+                      key={i}
                     />
                   ))}
                 </Column>
