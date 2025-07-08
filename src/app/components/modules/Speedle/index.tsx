@@ -202,7 +202,7 @@ const SpeedlePage = () => {
 
 export default SpeedlePage;
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   height: 100%;
   width: 100%;
 `;

@@ -1,8 +1,7 @@
-"use client"
+"use client";
 
 import { AnimatePresence } from "framer-motion";
 import SpeedlePage from "../components/modules/Speedle";
-
 
 const Speedle = () => {
   return (
