@@ -43,7 +43,7 @@ const TimerComponent = ({ start, isSolved, endGame }: any) => {
   const endGameForUser = async () => {
     let timeInSeconds = seconds + minutes * 60 + hours * 60 * 60;
 
-    if (isSolved) {
+    if (isSolved || endGame) {
       try {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();

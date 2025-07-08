@@ -11,7 +11,7 @@ interface WindowsProps {
 
 declare let window: WindowsProps;
 
-const GameDetails = ({ isSolved }: any) => {
+const GameDetails = ({ isSolved, endGame }: any) => {
   const [totalContribution, setTotalContribution] = useState<string>("");
   const [userContribution, setUserContribution] = useState<string>("");
   const [loader, setLoader] = useState<boolean>(true);
@@ -54,10 +54,10 @@ const GameDetails = ({ isSolved }: any) => {
   }, []);
 
   useEffect(()=>{
-    if(isSolved){
+    if(isSolved || endGame){
       getGameDetails()
     }
-  },[isSolved])
+  },[isSolved, endGame])
 
   return (
     <Wrapper>
