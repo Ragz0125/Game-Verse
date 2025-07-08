@@ -48,37 +48,6 @@ const SpeedlePage = () => {
     }
   };
 
-  function scheduleDailyAtTime(
-    hour: number,
-    minute: number,
-    callback: () => void
-  ) {
-    const now = new Date();
-    const target = new Date();
-
-    target.setHours(hour, minute, 0, 0); // e.g., 12:00 PM = setHours(12, 0, 0, 0)
-
-    // If the target time is in the past today, schedule for tomorrow
-    if (now.getTime() > target.getTime()) {
-      target.setDate(target.getDate() + 1);
-    }
-
-    const delay = target.getTime() - now.getTime();
-
-    console.log(
-      `Will run callback in ${(delay / 1000 / 60).toFixed(
-        2
-      )} minutes at ${target.toLocaleTimeString()}`
-    );
-
-    setTimeout(() => {
-      callback();
-
-      // Repeat every 24 hours after the first run
-      setInterval(callback, 24 * 60 * 60 * 1000);
-    }, delay);
-  }
-
   const checkWalletConnected = async () => {
     if (window.ethereum !== undefined) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -91,6 +60,7 @@ const SpeedlePage = () => {
 
       if (network.chainId !== 11155111) {
         setErrorMessage(NETWORK_ERROR_MESSAGE);
+        setErrorDescription("Refresh the page to retry");
         setErrorModal(true);
         return;
       }
@@ -111,7 +81,7 @@ const SpeedlePage = () => {
       }
     } else {
       setErrorMessage(METAMASK_ERROR_MESSAGE);
-      setErrorDescription("");
+      setErrorDescription("Refresh the page to retry");
       setErrorModal(true);
     }
   };
@@ -135,10 +105,13 @@ const SpeedlePage = () => {
     setLoader(true);
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
+      console.warn(provider);
       const network = await provider.getNetwork();
       if (network.chainId !== 11155111) {
         setErrorMessage(NETWORK_ERROR_MESSAGE);
+        setErrorDescription("Refresh the page to retry");
         setErrorModal(true);
+        setLoader(false);
       } else {
         const signer = await provider.getSigner();
 
