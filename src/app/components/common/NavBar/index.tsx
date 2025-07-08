@@ -3,15 +3,9 @@ import { motion, spring } from "framer-motion";
 import { useRouter } from "next/navigation";
 
 const NavBar = () => {
-  const router = useRouter();
-
-  const redirectPage = () => {
-router.push("/speedle")
-  }
-
   return (
     <>
-      <Wrapper onClick={() => redirectPage()}>
+      <Wrapper>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

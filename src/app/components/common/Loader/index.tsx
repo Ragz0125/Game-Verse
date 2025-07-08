@@ -6,7 +6,7 @@ const Loader = () => {
     <Wrapper
       animate={{ opacity: 1, rotate: 360 }}
       transition={{ duration: 5 }}
-      exit={{ y: "100%", opacity: 0 }}
+      exit={{ y: "600px", opacity: 0 }}
     >
       <img src="/icons/game-logo.png" />
     </Wrapper>

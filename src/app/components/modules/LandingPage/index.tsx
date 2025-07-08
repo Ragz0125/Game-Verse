@@ -3,8 +3,14 @@
 import styled from "styled-components";
 import NavBar from "../../common/NavBar";
 import { AnimatePresence, motion, spring } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 const LandingPage = () => {
+  const router = useRouter();
+  const redirectPage = () => {
+    router.push("/speedle");
+  };
+
   return (
     <>
       <NavBar />
@@ -48,6 +54,19 @@ const LandingPage = () => {
             Dive into the world of Web3 games where your skills earn rewards,
             and your assets are truly yours.
           </SecondaryText>
+          <Button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{
+              duration: 4,
+              delay: 5,
+              ease: "easeInOut",
+              type: spring,
+            }}
+            onClick={() => redirectPage()}
+          >
+            Get Started
+          </Button>
         </Container>
         <CoinDisplay />
         <BackgroundImagePosition>
@@ -233,4 +252,27 @@ const SecondaryText = styled(motion.div)`
   align-items: center;
   justify-content: center;
   text-align: center;
+`;
+
+const Button = styled(motion.div)`
+  width: 150px;
+  height: 45px;
+
+  color: black;
+
+  background: #fff;
+
+  border: 1px solid black;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 12px;
+
+  margin-top: 10px;
+
+  cursor: pointer;
+
+  z-index: 10;
 `;
