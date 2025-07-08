@@ -80,7 +80,7 @@ const SpeedlePage = () => {
   }
 
   const checkWalletConnected = async () => {
-    if (typeof window.ethereum !== undefined) {
+    if (window.ethereum !== undefined) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
 
       await provider.send("eth_requestAccounts", []);
