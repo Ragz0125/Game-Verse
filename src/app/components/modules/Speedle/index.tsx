@@ -146,7 +146,21 @@ const SpeedlePage = () => {
         <ToastMessage message={toastMessage} setShowToast={setShowToast} />
       )}
       <>
-        <Header>
+        <Header
+          style={{
+            position: "fixed",
+            height: "80px",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "5px",
+            letterSpacing: "5px",
+            color: "#fff",
+            fontSize: "24px",
+            borderBottom: "1px solid #fff",
+          }}
+        >
           <motion.div
             initial={{ x: -1000 }}
             animate={{ x: 0 }}
