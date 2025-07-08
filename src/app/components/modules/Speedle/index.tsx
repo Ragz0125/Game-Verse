@@ -178,7 +178,7 @@ const SpeedlePage = () => {
             SPEEDLE
           </motion.div>
         </Header>
-        <Wrapper>
+        <Wrapper style={{ height: "100%", width: "100%" }}>
           <Container>
             {loader ? (
               <BeatLoader color="#fff" />
