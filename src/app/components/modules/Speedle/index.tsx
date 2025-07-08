@@ -145,7 +145,7 @@ const SpeedlePage = () => {
       {showToast && (
         <ToastMessage message={toastMessage} setShowToast={setShowToast} />
       )}
-      <Wrapper>
+      <>
         <Header>
           <motion.div
             initial={{ x: -1000 }}
@@ -164,38 +164,40 @@ const SpeedlePage = () => {
             SPEEDLE
           </motion.div>
         </Header>
-        <Container>
-          {loader ? (
-            <BeatLoader color="#fff" />
-          ) : errorModal ? (
-            <Modal mainText={errorMessage} secondaryText={errorDescription} />
-          ) : openModal ? (
-            <SpeedleModal
-              setOpenModal={setOpenModal}
-              setStart={setStart}
-              onClickStart={onClickStart}
-            />
-          ) : (
-            <>
-              <Column>
-                <TimerComponent
-                  start={start}
-                  isSolved={isSolved}
-                  endGame={endGame}
-                />
-                {arrayBoxes.map((_, i) => (
-                  <GameCard
-                    isActive={isSolved ? false : i === currentRow}
-                    onHandleColumn={() => onHandleColumn()}
-                    setIsSolved={setIsSolved}
+        <Wrapper>
+          <Container>
+            {loader ? (
+              <BeatLoader color="#fff" />
+            ) : errorModal ? (
+              <Modal mainText={errorMessage} secondaryText={errorDescription} />
+            ) : openModal ? (
+              <SpeedleModal
+                setOpenModal={setOpenModal}
+                setStart={setStart}
+                onClickStart={onClickStart}
+              />
+            ) : (
+              <>
+                <Column>
+                  <TimerComponent
+                    start={start}
+                    isSolved={isSolved}
+                    endGame={endGame}
                   />
-                ))}
-              </Column>
-              <GameDetails isSolved={isSolved} />
-            </>
-          )}
-        </Container>
-      </Wrapper>
+                  {arrayBoxes.map((_, i) => (
+                    <GameCard
+                      isActive={isSolved ? false : i === currentRow}
+                      onHandleColumn={() => onHandleColumn()}
+                      setIsSolved={setIsSolved}
+                    />
+                  ))}
+                </Column>
+                <GameDetails isSolved={isSolved} />
+              </>
+            )}
+          </Container>
+        </Wrapper>
+      </>
     </>
   );
 };
@@ -207,7 +209,7 @@ const Wrapper = styled(motion.div)`
   width: 100%;
 `;
 
-const Header = styled.div`
+const Header = styled(motion.div)`
   position: fixed;
   height: 80px;
   width: 100%;
@@ -224,7 +226,7 @@ const Header = styled.div`
   border-bottom: 1px solid #fff;
 `;
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   padding-top: 90px;
   height: 100%;
   width: 100%;
