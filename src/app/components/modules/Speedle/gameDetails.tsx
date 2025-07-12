@@ -14,6 +14,7 @@ declare let window: WindowsProps;
 const GameDetails = ({ isSolved, endGame }: any) => {
   const [totalContribution, setTotalContribution] = useState<string>("");
   const [userContribution, setUserContribution] = useState<string>("");
+
   const [loader, setLoader] = useState<boolean>(true);
   const [leaderBoard, setLeaderBoard] = useState<any>({
     address: "",

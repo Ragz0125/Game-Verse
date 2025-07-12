@@ -64,22 +64,41 @@ export const convertTimeToString = (timeInSeconds: number) => {
 };
 
 export const getDayOfWeek = () => {
-  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
   const date = new Date("2025-07-08");
 
-  return date.getDay()
+  return date.getDay();
 };
 
-export const  getWeekOfMonth = (startOnMonday = false) =>{
-  const date = new Date()
+export const getWeekOfMonth = (startOnMonday = false) => {
+  const date = new Date();
   const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
   const dayOfMonth = date.getDate();
 
   const firstDayWeekday = firstDayOfMonth.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
   const offset = startOnMonday
-    ? (firstDayWeekday === 0 ? 6 : firstDayWeekday - 1)
+    ? firstDayWeekday === 0
+      ? 6
+      : firstDayWeekday - 1
     : firstDayWeekday;
 
   return Math.ceil((dayOfMonth + offset) / 7);
-}
+};
+
+export const getMetaMaskErrorMessages = (reason: string) => {
+  switch (reason) {
+    case "INSUFFICIENT_FUNDS":
+      return `You have insufficient funds. Please check and try again.`;
+    case "ACTION_REJECTED":
+      return "Connection request was rejected. Please approve the request in MetaMask to continue.";
+  }
+};

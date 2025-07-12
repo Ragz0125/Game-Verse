@@ -8,6 +8,7 @@ import TimerComponent from "./timer";
 import { ethers } from "ethers";
 import Modal from "../../common/Modal";
 import {
+  getMetaMaskErrorMessages,
   METAMASK_ERROR_MESSAGE,
   NETWORK_ERROR_MESSAGE,
   REFRESH_PAGE_TEXT,
@@ -17,6 +18,7 @@ import {
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "@/app/contract";
 import ToastMessage from "../../common/ToastMessage";
 import { BeatLoader } from "react-spinners";
+import { sign } from "crypto";
 
 interface WindowsProps {
   ethereum: any;
@@ -27,7 +29,7 @@ declare let window: WindowsProps;
 const SpeedlePage = () => {
   const [openModal, setOpenModal] = useState<boolean>(true);
   const [errorModal, setErrorModal] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string | undefined>("");
   const [currentRow, setIsCurrentRow] = useState<number>(0);
   const [start, setStart] = useState<boolean>(false);
   const [isSolved, setIsSolved] = useState<boolean>(false);
@@ -36,6 +38,7 @@ const SpeedlePage = () => {
   const [showToast, setShowToast] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>("");
   const [loader, setLoader] = useState<boolean>(true);
+
   const arrayBoxes = [1, 2, 3, 4, 5];
 
   const onHandleColumn = () => {
@@ -102,6 +105,7 @@ const SpeedlePage = () => {
   }, [isSolved]);
 
   const onClickStart = async (amount: string) => {
+    console.warn("I am here");
     setLoader(true);
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -114,20 +118,19 @@ const SpeedlePage = () => {
         setLoader(false);
       } else {
         const signer = await provider.getSigner();
+        const address = await signer.getAddress();
 
         const contract = new ethers.Contract(
           CONTRACT_ADDRESS,
           CONTRACT_ABI,
           signer
         );
-        console.warn(contract, " ", amount);
 
         let amountInWei = ethers.utils.parseEther(amount);
-        console.warn(amountInWei);
         const tx = await contract.getUserContribution(amountInWei, {
           value: amountInWei,
         });
-
+        console.warn(amountInWei + "Check");
         setLoader(true);
 
         await tx.wait();
@@ -136,7 +139,9 @@ const SpeedlePage = () => {
         setLoader(false);
       }
     } catch (error: any) {
-      console.warn(error.code);
+      setErrorMessage(getMetaMaskErrorMessages(error?.code));
+      setErrorModal(true);
+      setLoader(false);
     }
   };
 
