@@ -184,7 +184,17 @@ const SpeedlePage = () => {
           </motion.div>
         </Header>
         <Wrapper style={{ height: "100%", width: "100%" }}>
-          <Container>
+          <Container
+            style={{
+              paddingTop: "90px",
+              height: "100%",
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
             {loader ? (
               <BeatLoader color="#fff" />
             ) : errorModal ? (
