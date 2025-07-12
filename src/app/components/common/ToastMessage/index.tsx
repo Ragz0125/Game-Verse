@@ -21,7 +21,7 @@ export default ToastMessage;
 
 const Wrapper = styled.div`
   position: absolute;
-  top: 15%;
+  top: 17%;
   left: 45%;
 
   width: 150px;

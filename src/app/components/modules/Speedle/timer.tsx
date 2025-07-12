@@ -2,6 +2,7 @@ import { CONTRACT_ABI, CONTRACT_ADDRESS } from "@/app/contract";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { getMetaMaskErrorMessages } from "../../common/utils";
 
 interface WindowsProps {
   ethereum: any;
@@ -9,7 +10,7 @@ interface WindowsProps {
 
 declare let window: WindowsProps;
 
-const TimerComponent = ({ start, isSolved, endGame }: any) => {
+const TimerComponent = ({ start, isSolved, endGame, setErrorModal, setErrorMessage }: any) => {
   const [seconds, setSeconds] = useState<any>(0);
   const [minutes, setMinutes] = useState<any>(0);
   const [hours, setHours] = useState<any>(0);
@@ -56,7 +57,8 @@ const TimerComponent = ({ start, isSolved, endGame }: any) => {
 
         const tx = await contract.endGameForUser(timeInSeconds);
       } catch (error: any) {
-        console.warn(error.code);
+        setErrorMessage(getMetaMaskErrorMessages(error?.code))
+        setErrorModal(true)
       }
     }
   };

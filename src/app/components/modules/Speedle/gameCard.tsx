@@ -5,12 +5,11 @@ import { motion } from "framer-motion";
 import { wordsGrid } from "../../common/common";
 import { getDayOfWeek, getWeekOfMonth } from "../../common/utils";
 
-const GameCard = ({ isActive, onHandleColumn, setIsSolved }: any) => {
+const GameCard = ({ isActive, onHandleColumn, setIsSolved, wordOfTheDay }: any) => {
   const arrayBoxes = [1, 2, 3, 4, 5];
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
   const [rowAnswer, setRowAnswer] = useState<string>("");
-  const wordOfTheDay =
-    wordsGrid[getWeekOfMonth()][getDayOfWeek()].toUpperCase();
+
   const [arrayOfWord, setArrayOfWord] = useState<any>([]);
   const colors: any = {
     correct: "#6aaa64",

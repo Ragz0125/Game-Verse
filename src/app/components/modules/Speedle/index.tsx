@@ -8,7 +8,9 @@ import TimerComponent from "./timer";
 import { ethers } from "ethers";
 import Modal from "../../common/Modal";
 import {
+  getDayOfWeek,
   getMetaMaskErrorMessages,
+  getWeekOfMonth,
   METAMASK_ERROR_MESSAGE,
   NETWORK_ERROR_MESSAGE,
   REFRESH_PAGE_TEXT,
@@ -19,6 +21,7 @@ import { CONTRACT_ABI, CONTRACT_ADDRESS } from "@/app/contract";
 import ToastMessage from "../../common/ToastMessage";
 import { BeatLoader } from "react-spinners";
 import { sign } from "crypto";
+import { wordsGrid } from "../../common/common";
 
 interface WindowsProps {
   ethereum: any;
@@ -38,6 +41,8 @@ const SpeedlePage = () => {
   const [showToast, setShowToast] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>("");
   const [loader, setLoader] = useState<boolean>(true);
+  const wordOfTheDay =
+    wordsGrid[getWeekOfMonth()][getDayOfWeek()].toUpperCase();
 
   const arrayBoxes = [1, 2, 3, 4, 5];
 
@@ -105,11 +110,10 @@ const SpeedlePage = () => {
   }, [isSolved]);
 
   const onClickStart = async (amount: string) => {
-    console.warn("I am here");
     setLoader(true);
+    setStart(true);
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
-      console.warn(provider);
       const network = await provider.getNetwork();
       if (network.chainId !== 11155111) {
         setErrorMessage(NETWORK_ERROR_MESSAGE);
@@ -130,10 +134,10 @@ const SpeedlePage = () => {
         const tx = await contract.getUserContribution(amountInWei, {
           value: amountInWei,
         });
-        console.warn(amountInWei + "Check");
         setLoader(true);
 
         await tx.wait();
+        setOpenModal(false);
         setOpenModal(false);
         setStart(true);
         setLoader(false);
@@ -207,17 +211,27 @@ const SpeedlePage = () => {
               />
             ) : (
               <>
+                {endGame && (
+                  <div
+                    style={{ position: "absolute", top: "12%", left: "45%" }}
+                  >
+                    <ToastMessage message={`The word is ${wordOfTheDay}`} />
+                  </div>
+                )}
                 <Column>
                   <TimerComponent
                     start={start}
                     isSolved={isSolved}
                     endGame={endGame}
+                    setErrorModal={setErrorModal}
+                    setErrorMessage={setErrorMessage}
                   />
                   {arrayBoxes.map((_, i) => (
                     <GameCard
                       isActive={isSolved ? false : i === currentRow}
                       onHandleColumn={() => onHandleColumn()}
                       setIsSolved={setIsSolved}
+                      wordOfTheDay={wordOfTheDay}
                       key={i}
                     />
                   ))}
