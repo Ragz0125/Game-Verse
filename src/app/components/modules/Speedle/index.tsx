@@ -110,8 +110,7 @@ const SpeedlePage = () => {
   }, [isSolved]);
 
   const onClickStart = async (amount: string) => {
-    setLoader(true);
-    setStart(true);
+    setLoader(true)
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const network = await provider.getNetwork();
